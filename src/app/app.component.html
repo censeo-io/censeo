@@ -1,2 +1,8 @@
-<p>censeo-root works!</p>
+<p-menubar [model]="(navMenuItems$ | async) || []">
+  <ng-template pTemplate="start">
+    <a routerLink="/">
+      <img src="assets/coffee.png" height="40" class="mr-2" />
+    </a>
+  </ng-template>
+</p-menubar>
 <router-outlet></router-outlet>
