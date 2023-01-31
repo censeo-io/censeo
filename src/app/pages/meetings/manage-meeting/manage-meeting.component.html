@@ -40,8 +40,19 @@
         name="owners"
         [(ngModel)]="newMeetingOwners"
         [addOnTab]="true"
-        (onAdd)="ensureCurrentOwner()"
         (onRemove)="onRemoveOwner($event)"
+        inputStyleClass="text-base text-color surface-overlay p-2 border-round appearance-none outline-none w-full"
+      ></p-chips>
+    </div>
+  </div>
+
+  <div class="field grid">
+    <label for="voters" class="col-fixed">Voters</label>
+    <div class="col">
+      <p-chips
+        name="voters"
+        [(ngModel)]="newMeetingVoters"
+        [addOnTab]="true"
         inputStyleClass="text-base text-color surface-overlay p-2 border-round appearance-none outline-none w-full"
       ></p-chips>
     </div>

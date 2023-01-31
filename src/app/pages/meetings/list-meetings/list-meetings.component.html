@@ -26,16 +26,32 @@
       <th pSortableColumn="created">
         Created <p-sortIcon field="created"></p-sortIcon>
       </th>
-      <th>Owners</th>
-      <th style="width: 5rem">Delete</th>
+      <th class="text-center">Owners</th>
+      <th class="text-center">Voters</th>
+      <th class="text-center" style="width: 5rem">Delete</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-meeting>
     <tr>
       <td>{{ meeting.name }}</td>
       <td>{{ getDateDisplay(meeting) }}</td>
-      <td>{{ meeting.owners.length }}</td>
-      <td>
+      <td class="text-center">
+        <span
+          pTooltip="{{ meeting.owners.join('<br />') }}"
+          tooltipPosition="top"
+          [escape]="false"
+          >{{ meeting.owners.length }}</span
+        >
+      </td>
+      <td class="text-center">
+        <span
+          pTooltip="{{ meeting.voters?.join('<br />') }}"
+          tooltipPosition="top"
+          [escape]="false"
+          >{{ meeting.voters?.length || 0 }}</span
+        >
+      </td>
+      <td class="text-center">
         <button
           type="button"
           class="p-button-rounded p-button-danger"

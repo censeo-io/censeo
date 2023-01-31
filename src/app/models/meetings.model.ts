@@ -6,11 +6,11 @@ export type MeetingId = z.infer<typeof MeetingId>;
 export const MeetingName = z.string().max(100).brand('MeetingName');
 export type MeetingName = z.infer<typeof MeetingName>;
 
-export const MeetingOwner = z.string().email().brand('MeetingOwner');
-export type MeetingOwner = z.infer<typeof MeetingOwner>;
+export const MeetingUser = z.string().email().brand('MeetingUser');
+export type MeetingUser = z.infer<typeof MeetingUser>;
 
 export const MeetingOwners = z
-  .array(MeetingOwner)
+  .array(MeetingUser)
   .nonempty()
   // Ensure we have a distinct, case-insensitive list
   .transform((owners) =>
@@ -18,6 +18,15 @@ export const MeetingOwners = z
   )
   .brand('MeetingOwners');
 export type MeetingOwners = z.infer<typeof MeetingOwners>;
+
+export const MeetingVoters = z
+  .array(MeetingUser)
+  // Ensure we have a distinct, case-insensitive list
+  .transform((owners) =>
+    Array.from(new Set(owners.map((owner) => owner.toLowerCase()))),
+  )
+  .brand('MeetingVoters');
+export type MeetingVoters = z.infer<typeof MeetingVoters>;
 
 export const MeetingCreated = z.date().brand('MeetingCreated');
 export type MeetingCreated = z.infer<typeof MeetingCreated>;
@@ -35,6 +44,7 @@ export const Meeting = z
     id: MeetingId,
     name: MeetingName,
     owners: MeetingOwners,
+    voters: MeetingVoters,
     created: MeetingCreated.or(
       MeetingTimestamp.transform(
         (timestamp) => new Date(timestamp.seconds * 1000),
@@ -48,6 +58,7 @@ export const NewMeeting = z
   .object({
     name: MeetingName,
     owners: MeetingOwners,
+    voters: MeetingVoters,
     created: MeetingCreated.default(() => new Date()),
   })
   .brand('NewMeeting');

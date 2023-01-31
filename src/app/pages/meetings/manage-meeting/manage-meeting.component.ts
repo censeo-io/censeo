@@ -4,7 +4,7 @@ import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import {
   MeetingName,
-  MeetingOwner,
+  MeetingUser,
   NewMeeting,
 } from 'src/app/models/meetings.model';
 import { AuthService } from 'src/app/services/auth.service';
@@ -18,9 +18,10 @@ import { MeetingsService } from 'src/app/services/meetings.service';
 export class ManageMeetingComponent implements OnInit {
   subscriptions = new Subscription();
 
-  currentOwner?: MeetingOwner;
+  currentUser?: MeetingUser;
   newMeetingName?: MeetingName;
-  newMeetingOwners: MeetingOwner[] = [];
+  newMeetingOwners: MeetingUser[] = [];
+  newMeetingVoters: MeetingUser[] = [];
 
   saving: boolean = false;
 
@@ -32,41 +33,41 @@ export class ManageMeetingComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.setupCurrentOwner();
-    this.ensureCurrentOwner();
+    this.setupCurrentUser();
+    this.ensureCurrentUserIsOwner();
   }
 
-  setupCurrentOwner() {
+  setupCurrentUser() {
     const user = this.authService.user$.getValue();
     try {
-      this.currentOwner = MeetingOwner.parse(user?.email);
+      this.currentUser = MeetingUser.parse(user?.email);
     } catch (error) {
       console.error(error);
     }
   }
 
-  ensureCurrentOwner() {
-    if (!this.currentOwner) {
+  ensureCurrentUserIsOwner() {
+    if (!this.currentUser) {
       return;
     }
 
     this.newMeetingOwners = Array.from(
       new Set(
-        this.currentOwner
-          ? [this.currentOwner, ...this.newMeetingOwners]
+        this.currentUser
+          ? [this.currentUser, ...this.newMeetingOwners]
           : this.newMeetingOwners,
       ),
     );
   }
 
   onRemoveOwner({ value }: { value: string }) {
-    if (value === this.currentOwner) {
+    this.ensureCurrentUserIsOwner();
+    if (value === this.currentUser) {
       this.messageService.add({
         severity: 'info',
         detail: 'You may not remove yourself as an owner',
       });
     }
-    this.ensureCurrentOwner();
   }
 
   async saveMeeting($event: Event) {
@@ -74,10 +75,11 @@ export class ManageMeetingComponent implements OnInit {
 
     let newMeeting: NewMeeting;
     try {
-      this.ensureCurrentOwner();
+      this.ensureCurrentUserIsOwner();
       newMeeting = NewMeeting.parse({
         name: this.newMeetingName,
         owners: this.newMeetingOwners,
+        voters: this.newMeetingVoters,
       });
     } catch (error) {
       this.messageService.add({
