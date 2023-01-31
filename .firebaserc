@@ -1,14 +1,14 @@
 {
   "targets": {
-    "censeo-5ed63": {
+    "censeo-io": {
       "hosting": {
         "censeo": [
-          "censeo-5ed63"
+          "censeo-io"
         ]
       }
     }
   },
   "projects": {
-    "default": "censeo-5ed63"
+    "default": "censeo-io"
   }
 }

@@ -19,11 +19,14 @@
     "@angular/platform-browser-dynamic": "~15.1.0",
     "@angular/router": "~15.1.0",
     "@nrwl/angular": "15.6.3",
+    "date-fns": "^2.29.3",
+    "lodash-es": "^4.17.21",
     "primeflex": "^3.3.0",
     "primeicons": "^6.0.1",
     "primeng": "^15.1.1",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
+    "zod": "^3.20.2",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -41,6 +44,7 @@
     "@nrwl/nx-cloud": "latest",
     "@nrwl/workspace": "15.6.3",
     "@types/jest": "28.1.1",
+    "@types/lodash-es": "^4.17.6",
     "@types/node": "16.11.7",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",

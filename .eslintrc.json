@@ -26,7 +26,8 @@
             "prefix": "censeo",
             "style": "kebab-case"
           }
-        ]
+        ],
+        "comma-dangle": ["always-multiline"]
       }
     },
     {

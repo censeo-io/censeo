@@ -1,12 +1,12 @@
 export const environment = {
   production: false,
   firebase: {
-    projectId: 'censeo-5ed63',
-    appId: '1:964134969986:web:a7549eecda1a91d845ca9b',
-    storageBucket: 'censeo-5ed63.appspot.com',
-    apiKey: 'AIzaSyCaBlPI84LNkjEolwN1jYwdgRxLPNmERyw',
-    authDomain: 'censeo-5ed63.firebaseapp.com',
-    messagingSenderId: '964134969986',
-    measurementId: 'G-V10SQXR107',
+    apiKey: 'AIzaSyBgGJrRUo_p6cNsQvLNN149lns4fTZWT0g',
+    authDomain: 'censeo-io.firebaseapp.com',
+    projectId: 'censeo-io',
+    storageBucket: 'censeo-io.appspot.com',
+    messagingSenderId: '726428552420',
+    appId: '1:726428552420:web:89a95d75c73db0016970f1',
+    measurementId: 'G-3NL97HM0JD',
   },
 };
