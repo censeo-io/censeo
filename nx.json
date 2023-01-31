@@ -3,10 +3,9 @@
   "npmScope": "censeo",
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/nx-cloud",
+      "runner": "nx/tasks-runners/default",
       "options": {
         "cacheableOperations": ["build", "lint", "test", "e2e"],
-        "accessToken": "MTJmZDNmNTMtODg4Yy00YzllLWE2N2QtMjgwNzU3YzdmNzA3fHJlYWQtd3JpdGU="
       }
     }
   },
