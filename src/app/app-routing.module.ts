@@ -6,8 +6,9 @@ import { AuthGuard, AuthPipeGenerator } from '@angular/fire/auth-guard';
 import { RouterModule, Routes } from '@angular/router';
 import { map } from 'rxjs';
 import { HomeComponent } from './pages/home/home.component';
+import { ListMeetingsComponent } from './pages/meetings/list-meetings/list-meetings.component';
+import { ManageMeetingComponent } from './pages/meetings/manage-meeting/manage-meeting.component';
 import { MeetingsComponent } from './pages/meetings/meetings.component';
-import { UsersComponent } from './pages/users/users.component';
 
 const authPipeGenerator: AuthPipeGenerator = () =>
   // If we have a user, return `true`.  Otherwise, redirect to the home page.
@@ -20,12 +21,10 @@ const routes: Routes = [
     component: MeetingsComponent,
     canActivate: [AuthGuard],
     data: { authGuardPipe: authPipeGenerator },
-  },
-  {
-    path: 'users',
-    component: UsersComponent,
-    canActivate: [AuthGuard],
-    data: { authGuardPipe: authPipeGenerator },
+    children: [
+      { path: '', pathMatch: 'full', component: ListMeetingsComponent },
+      { path: 'manage', component: ManageMeetingComponent },
+    ],
   },
 ];
 

@@ -1,13 +1,39 @@
 // nx g m pages -m app
 
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { AutoFocusModule } from 'primeng/autofocus';
+import { ButtonModule } from 'primeng/button';
+import { ChipsModule } from 'primeng/chips';
+import { InputTextModule } from 'primeng/inputtext';
+import { TableModule } from 'primeng/table';
+import { ToastModule } from 'primeng/toast';
 import { HomeComponent } from './home/home.component';
+import { ListMeetingsComponent } from './meetings/list-meetings/list-meetings.component';
+import { ManageMeetingComponent } from './meetings/manage-meeting/manage-meeting.component';
 import { MeetingsComponent } from './meetings/meetings.component';
-import { UsersComponent } from './users/users.component';
 
 @NgModule({
-  declarations: [HomeComponent, MeetingsComponent, UsersComponent],
-  imports: [CommonModule],
+  declarations: [
+    HomeComponent,
+    MeetingsComponent,
+    ManageMeetingComponent,
+    ListMeetingsComponent,
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterModule,
+    provideFirestore(() => getFirestore()),
+    AutoFocusModule,
+    ButtonModule,
+    ChipsModule,
+    InputTextModule,
+    ToastModule,
+    TableModule,
+  ],
 })
 export class PagesModule {}

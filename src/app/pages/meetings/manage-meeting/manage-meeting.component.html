@@ -1,0 +1,49 @@
+<h1>Add Meeting</h1>
+
+<form (ngSubmit)="saveMeeting($event)">
+  <div class="col-12 text-right pb-3">
+    <a [routerLink]="['/meetings']" class="p-button p-button-sm p-button-link"
+      >Cancel</a
+    >
+
+    <button
+      type="submit"
+      class="p-button-sm"
+      pButton
+      pRipple
+      icon="pi pi-plus"
+      label="Save"
+      [loading]="saving"
+    ></button>
+  </div>
+
+  <div class="field grid">
+    <label for="newMeetingName" class="col-fixed">Meeting Name</label>
+    <div class="col">
+      <input
+        [(ngModel)]="newMeetingName"
+        pInputText
+        pAutoFocus
+        [autofocus]="true"
+        type="text"
+        name="name"
+        id="newMeetingName"
+        class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+      />
+    </div>
+  </div>
+
+  <div class="field grid">
+    <label for="owners" class="col-fixed">Owners</label>
+    <div class="col">
+      <p-chips
+        name="owners"
+        [(ngModel)]="newMeetingOwners"
+        [addOnTab]="true"
+        (onAdd)="ensureCurrentOwner()"
+        (onRemove)="onRemoveOwner($event)"
+        inputStyleClass="text-base text-color surface-overlay p-2 border-round appearance-none outline-none w-full"
+      ></p-chips>
+    </div>
+  </div>
+</form>
