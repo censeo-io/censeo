@@ -1,22 +1,7 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, ParamMap, Params } from '@angular/router';
-import {
-  Observable,
-  combineLatest,
-  delay,
-  iif,
-  map,
-  of,
-  startWith,
-  switchMap,
-  tap,
-} from 'rxjs';
-import {
-  Meeting,
-  NewMeeting,
-  toMeeting,
-  toNewMeeting,
-} from '../../../models/meeting.model';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable, combineLatest, map, startWith, switchMap } from 'rxjs';
+import { Meeting, NewMeeting } from '../../../models/meeting.model';
 import { MeetingService } from '../../../services/meeting.service';
 
 @Component({
@@ -46,7 +31,7 @@ export class ManageMeetingComponent {
     startWith(true),
   );
 
-  saving: boolean = false;
+  saving = false;
 
   constructor(
     private readonly meetingService: MeetingService,
@@ -55,7 +40,7 @@ export class ManageMeetingComponent {
 
   async saveMeeting(
     $event: Event,
-    changedMeeting: any,
+    changedMeeting: Meeting | NewMeeting,
     meetingId: string | null,
   ) {
     $event.preventDefault();
