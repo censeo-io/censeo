@@ -19,7 +19,6 @@ import { format } from 'date-fns';
 import { MessageService } from 'primeng/api';
 import {
   catchError,
-  delay,
   firstValueFrom,
   from,
   map,
@@ -42,7 +41,7 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class MeetingsService {
+export class MeetingService {
   constructor(
     private readonly authService: AuthService,
     private readonly firestore: Firestore,

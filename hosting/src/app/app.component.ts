@@ -1,16 +1,9 @@
 import { Component, OnDestroy, OnInit, Optional } from '@angular/core';
-import {
-  Auth,
-  authState,
-  GoogleAuthProvider,
-  signInWithPopup,
-  signOut,
-} from '@angular/fire/auth';
+import { Auth, authState } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { MenuItem } from 'primeng/api';
-import { map, noop, Observable, of, Subscription, tap } from 'rxjs';
+import { Subscription, map } from 'rxjs';
+import { toMaybeUser } from './models/user.model';
 import { AuthService } from './services/auth.service';
-import { MaybeUser, toMaybeUser } from './models/user.model';
 
 @Component({
   selector: 'censeo-root',
@@ -18,7 +11,7 @@ import { MaybeUser, toMaybeUser } from './models/user.model';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  navMenuItems$!: Observable<MenuItem[]>;
+  navMenuItems$ = this.authService.getNavMenuItems$(this.auth);
   subscriptions = new Subscription();
 
   constructor(
@@ -36,59 +29,9 @@ export class AppComponent implements OnInit, OnDestroy {
           .subscribe((user) => this.authService.setMaybeUser(user)),
       );
     }
-
-    this.navMenuItems$ = this.authService.maybeUser$.pipe(
-      map((user) => this.getNavItems(user)),
-    );
   }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
-  }
-
-  private getNavItems(user: MaybeUser): MenuItem[] {
-    const baseNavItems = [
-      {
-        label: 'Censeo',
-        routerLink: '/',
-        styleClass: 'font-bold',
-        routerLinkActiveOptions: { exact: true },
-      },
-    ];
-
-    if (user) {
-      // User is logged in
-      return [
-        ...baseNavItems,
-        {
-          label: 'Meetings',
-          icon: 'pi pi-fw pi-calendar',
-          routerLink: 'meetings',
-        },
-        {
-          label: user.authUser.displayName,
-          icon: 'pi pi-fw pi-user',
-          items: [
-            {
-              label: 'Logout',
-              command: () =>
-                signOut(this.auth).then(() => this.router.navigate([''])),
-            },
-          ],
-        } as MenuItem,
-      ];
-    }
-
-    // User is not logged in
-    return [
-      ...baseNavItems,
-      {
-        label: 'Login',
-        command: () =>
-          signInWithPopup(this.auth, new GoogleAuthProvider()).then(() =>
-            this.router.navigate(['/meetings']),
-          ),
-      },
-    ];
   }
 }

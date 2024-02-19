@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Observable, map, startWith } from 'rxjs';
 import { MeetingId, MeetingWithId } from 'src/app/models/meeting.model';
-import { MeetingsService } from 'src/app/services/meetings.service';
+import { MeetingService } from 'src/app/services/meeting.service';
 
 @Component({
   selector: 'censeo-list-meetings',
@@ -11,7 +11,7 @@ import { MeetingsService } from 'src/app/services/meetings.service';
   styleUrls: ['./list-meetings.component.scss'],
 })
 export class ListMeetingsComponent {
-  meetings$: Observable<MeetingWithId[]> = this.meetingsService.load();
+  meetings$: Observable<MeetingWithId[]> = this.meetingService.load();
   loading$ = this.meetings$.pipe(
     map(() => false),
     startWith(true),
@@ -20,11 +20,11 @@ export class ListMeetingsComponent {
   deletingMeetingId?: MeetingId;
   sortOrder = -1;
   // TODO: Where should this live?
-  getDateDisplay = this.meetingsService.getDateDisplay;
+  getDateDisplay = this.meetingService.getDateDisplay;
 
   constructor(
     private readonly confirmationService: ConfirmationService,
-    private readonly meetingsService: MeetingsService,
+    private readonly meetingService: MeetingService,
     private readonly messageService: MessageService,
     private readonly router: Router,
     private readonly route: ActivatedRoute,
@@ -43,7 +43,7 @@ export class ListMeetingsComponent {
       accept: async () => {
         this.deletingMeetingId = undefined;
         try {
-          await this.meetingsService.delete(meeting.id);
+          await this.meetingService.delete(meeting.id);
           this.messageService.add({
             severity: 'success',
             summary: 'Deleted',

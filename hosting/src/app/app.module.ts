@@ -21,7 +21,7 @@ import { PagesModule } from './pages/pages.module';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     AppRoutingModule,
-    StyleClassModule,
+    StyleClassModule, // TODO: Do I need this?
     MenubarModule,
     ConfirmDialogModule,
     ToastModule,

@@ -47,6 +47,13 @@ export type MeetingCreatedOrTimestamp = z.infer<
   typeof MeetingCreatedOrTimestamp
 >;
 
+// Meeting types
+//   - List of meetings (each item will have data + id) --> MeetingWithId
+//   - Meeting from DB (will have data, no id)          --> Meeting
+//   - New meeting
+//     - Initially (will have no/partial data, no id)   --> NewMeeting
+//     - After validation (will have data, no id)       --> Meeting
+
 const MeetingBase = z.object({
   name: MeetingName,
   owners: MeetingOwners,
@@ -71,10 +78,3 @@ export const MeetingWithId = MeetingBase.extend({ id: MeetingId }).brand(
 );
 export type MeetingWithId = z.infer<typeof MeetingWithId>;
 export const toMeetingWithId = (m: unknown) => MeetingWithId.parse(m);
-
-// Meeting types
-//   - List of meetings (each item will have data + id)     --> MeetingWithId
-//   - Meeting from DB (will have data, no id)              --> Meeting
-//   - New meeting
-//     - Initially (will have no/partial data, no id)       --> NewMeeting
-//     - After validation (will have data, no id)           --> Meeting

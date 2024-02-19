@@ -17,7 +17,7 @@ import {
   toMeeting,
   toNewMeeting,
 } from '../../../models/meeting.model';
-import { MeetingsService } from '../../../services/meetings.service';
+import { MeetingService } from '../../../services/meeting.service';
 
 @Component({
   selector: 'censeo-manage-meeting',
@@ -29,7 +29,7 @@ export class ManageMeetingComponent {
     map((params: ParamMap) => params.get('id')),
   );
   meeting$: Observable<Meeting | NewMeeting> = this.meetingId$.pipe(
-    switchMap((meetingId) => this.meetingsService.get(meetingId)),
+    switchMap((meetingId) => this.meetingService.get(meetingId)),
   );
   isEditing$: Observable<boolean> = this.meetingId$.pipe(
     map((meetingId) => !!meetingId),
@@ -49,7 +49,7 @@ export class ManageMeetingComponent {
   saving: boolean = false;
 
   constructor(
-    private readonly meetingsService: MeetingsService,
+    private readonly meetingService: MeetingService,
     private readonly route: ActivatedRoute,
   ) {}
 
@@ -60,7 +60,7 @@ export class ManageMeetingComponent {
   ) {
     $event.preventDefault();
     this.saving = true;
-    await this.meetingsService.save(changedMeeting, meetingId);
+    await this.meetingService.save(changedMeeting, meetingId);
     this.saving = false;
   }
 }
