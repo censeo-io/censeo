@@ -1,7 +1,7 @@
 // nx g m app-routing -m app --flat
 
 import { NgModule } from '@angular/core';
-import { User } from '@angular/fire/auth';
+import { User as AngularFireUser } from '@angular/fire/auth';
 import { AuthGuard, AuthPipeGenerator } from '@angular/fire/auth-guard';
 import { RouterModule, Routes } from '@angular/router';
 import { map } from 'rxjs';
@@ -12,7 +12,7 @@ import { MeetingsComponent } from './pages/meetings/meetings.component';
 
 const authPipeGenerator: AuthPipeGenerator = () =>
   // If we have a user, return `true`.  Otherwise, redirect to the home page.
-  map((user: User | null) => !!user || ['']);
+  map((user: AngularFireUser | null) => !!user || ['']);
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
@@ -22,8 +22,19 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: { authGuardPipe: authPipeGenerator },
     children: [
-      { path: '', pathMatch: 'full', component: ListMeetingsComponent },
-      { path: 'manage', component: ManageMeetingComponent },
+      {
+        path: '',
+        pathMatch: 'full',
+        component: ListMeetingsComponent,
+      },
+      {
+        path: 'manage',
+        component: ManageMeetingComponent,
+      },
+      {
+        path: 'manage/:id',
+        component: ManageMeetingComponent,
+      },
     ],
   },
 ];

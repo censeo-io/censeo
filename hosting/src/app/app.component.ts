@@ -5,12 +5,12 @@ import {
   GoogleAuthProvider,
   signInWithPopup,
   signOut,
-  User,
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { map, noop, Observable, of, Subscription, tap } from 'rxjs';
 import { AuthService } from './services/auth.service';
+import { MaybeUser, toMaybeUser } from './models/user.model';
 
 @Component({
   selector: 'censeo-root',
@@ -32,12 +32,12 @@ export class AppComponent implements OnInit, OnDestroy {
       // If we have `this.auth`, subscribe to the auth state, so we can set the user
       this.subscriptions.add(
         authState(this.auth)
-          .pipe(tap((user) => this.authService.user$.next(user)))
-          .subscribe(noop),
+          .pipe(map((user) => toMaybeUser(user)))
+          .subscribe((user) => this.authService.setMaybeUser(user)),
       );
     }
 
-    this.navMenuItems$ = this.authService.user$.pipe(
+    this.navMenuItems$ = this.authService.maybeUser$.pipe(
       map((user) => this.getNavItems(user)),
     );
   }
@@ -46,7 +46,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscriptions.unsubscribe();
   }
 
-  private getNavItems(user: User | null): MenuItem[] {
+  private getNavItems(user: MaybeUser): MenuItem[] {
     const baseNavItems = [
       {
         label: 'Censeo',
@@ -66,7 +66,7 @@ export class AppComponent implements OnInit, OnDestroy {
           routerLink: 'meetings',
         },
         {
-          label: user.displayName,
+          label: user.authUser.displayName,
           icon: 'pi pi-fw pi-user',
           items: [
             {
