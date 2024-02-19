@@ -4,6 +4,15 @@
       <img src="assets/coffee.png" height="40" class="mr-2" />
     </a>
   </ng-template>
+
+  <ng-template *ngIf="isDevMode" pTemplate="end">
+    <p-tag
+      severity="warning"
+      icon="pi pi-exclamation-circle"
+      value="Dev mode"
+      [rounded]="true"
+    ></p-tag>
+  </ng-template>
 </p-menubar>
 
 <router-outlet></router-outlet>

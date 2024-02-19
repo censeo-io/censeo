@@ -1,5 +1,5 @@
 // nx g s services/meetings
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import {
   Firestore,
   addDoc,
@@ -39,6 +39,8 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class MeetingService {
+  meetingsPath = isDevMode() ? 'meetings-dev' : 'meetings';
+
   constructor(
     private readonly authService: AuthService,
     private readonly firestore: Firestore,
@@ -47,7 +49,7 @@ export class MeetingService {
   ) {}
 
   load(): Observable<MeetingWithId[]> {
-    return collectionData(collection(this.firestore, 'meetings'), {
+    return collectionData(collection(this.firestore, this.meetingsPath), {
       idField: 'id',
     }).pipe(
       traceUntilFirst('firestore'),
@@ -57,7 +59,7 @@ export class MeetingService {
 
   get(id: string | null): Observable<Meeting | NewMeeting> {
     return id
-      ? from(getDoc(doc(this.firestore, 'meetings', id))).pipe(
+      ? from(getDoc(doc(this.firestore, this.meetingsPath, id))).pipe(
           map((docSnap) => {
             if (docSnap.exists()) {
               // Documents don't have the `id` in the data; add it here so we can parse
@@ -136,12 +138,12 @@ export class MeetingService {
 
   private backendSave(meeting: Meeting, meetingId: string | null) {
     return meetingId
-      ? setDoc(doc(this.firestore, 'meetings', meetingId), meeting)
-      : addDoc(collection(this.firestore, 'meetings'), meeting);
+      ? setDoc(doc(this.firestore, this.meetingsPath, meetingId), meeting)
+      : addDoc(collection(this.firestore, this.meetingsPath), meeting);
   }
 
   delete(id: MeetingId) {
-    return deleteDoc(doc(this.firestore, 'meetings', id));
+    return deleteDoc(doc(this.firestore, this.meetingsPath, id));
   }
 
   getDateDisplay(meeting: Meeting) {
