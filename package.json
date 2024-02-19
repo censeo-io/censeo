@@ -12,7 +12,8 @@
     "format": "nx format",
     "format:check": "nx format:check",
     "predeploy": "npm run format && npm run lint && npm run test && npm run build",
-    "deploy": "npm run predeploy && node_modules/.bin/firebase deploy --only hosting,firestore"
+    "deploy:all": "npm run predeploy && node_modules/.bin/firebase deploy --only hosting,firestore",
+    "deploy:stage": "npm run predeploy && node_modules/.bin/firebase hosting:channel:deploy stage"
   },
   "private": true,
   "dependencies": {
