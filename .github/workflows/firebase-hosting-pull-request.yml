@@ -7,11 +7,24 @@ jobs:
   build_and_preview:
     if: "${{ github.event.pull_request.head.repo.full_name == github.repository }}"
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      contents: read
+      pull-requests: write
     steps:
       - uses: actions/checkout@v4
-      - run: cd hosting && npm ci && node_modules/.bin/nx lint && node_modules/.bin/nx test && node_modules/.bin/nx build
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "npm"
+          cache-dependency-path: hosting/package-lock.json
+      - run: cd hosting && npm ci
+      - run: cd hosting && node_modules/.bin/nx lint
+      - run: cd hosting && node_modules/.bin/nx test
+      - run: cd hosting && node_modules/.bin/nx build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
           firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_CENSEO_IO }}"
           projectId: censeo-io
+          expires: 2d
