@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Observable, map, startWith } from 'rxjs';
-import { MeetingId, MeetingWithId } from 'src/app/models/meeting.model';
-import { MeetingService } from 'src/app/services/meeting.service';
+import { MeetingId, MeetingWithId } from '../../../models/meeting.model';
+import { MeetingService } from '../../../services/meeting.service';
 
 @Component({
   selector: 'censeo-list-meetings',
