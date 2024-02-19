@@ -1,4 +1,10 @@
-import { Component, OnDestroy, OnInit, Optional } from '@angular/core';
+import {
+  Component,
+  isDevMode,
+  OnDestroy,
+  OnInit,
+  Optional,
+} from '@angular/core';
 import { Auth, authState } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { Subscription, map } from 'rxjs';
@@ -13,6 +19,7 @@ import { AuthService } from './services/auth.service';
 export class AppComponent implements OnInit, OnDestroy {
   navMenuItems$ = this.authService.getNavMenuItems$(this.auth);
   subscriptions = new Subscription();
+  isDevMode = isDevMode();
 
   constructor(
     @Optional() private readonly auth: Auth,

@@ -7,6 +7,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MenubarModule } from 'primeng/menubar';
 import { StyleClassModule } from 'primeng/styleclass';
+import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
@@ -24,6 +25,7 @@ import { PagesModule } from './pages/pages.module';
     StyleClassModule, // TODO: Do I need this?
     MenubarModule,
     ConfirmDialogModule,
+    TagModule,
     ToastModule,
     PagesModule,
   ],
