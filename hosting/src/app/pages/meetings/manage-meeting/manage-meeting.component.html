@@ -1,0 +1,61 @@
+<h1>{{ (isEditing$ | async) ? 'Edit' : 'Add' }} Meeting</h1>
+
+<censeo-async-loader *ngIf="data$ | async as data" [loading]="loading$ | async">
+  <form (ngSubmit)="saveMeeting($event, data.meeting, data.meetingId)">
+    <div class="field grid">
+      <label for="meetingName" class="col-fixed">Meeting Name</label>
+      <div class="col">
+        <input
+          [(ngModel)]="data.meeting.name"
+          pInputText
+          pAutoFocus
+          [autofocus]="true"
+          type="text"
+          name="name"
+          id="meetingName"
+          class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+        />
+      </div>
+    </div>
+
+    <div class="field grid">
+      <label for="owners" class="col-fixed">Owners</label>
+      <div class="col">
+        <p-chips
+          name="owners"
+          [(ngModel)]="data.meeting.owners"
+          [addOnTab]="true"
+          inputStyleClass="text-base text-color surface-overlay p-2 border-round appearance-none outline-none w-full"
+        ></p-chips>
+      </div>
+    </div>
+
+    <div class="field grid">
+      <label for="voters" class="col-fixed">Voters</label>
+      <div class="col">
+        <p-chips
+          name="voters"
+          [(ngModel)]="data.meeting.voters"
+          [addOnTab]="true"
+          inputStyleClass="text-base text-color surface-overlay p-2 border-round appearance-none outline-none w-full"
+        ></p-chips>
+      </div>
+    </div>
+
+    <div class="col-12 text-right pt-3">
+      <a [routerLink]="['/meetings']" class="p-button p-button-sm p-button-link"
+        >Cancel</a
+      >
+
+      <button
+        type="submit"
+        class="p-button-sm"
+        pButton
+        pRipple
+        icon="pi pi-plus"
+        label="Save"
+        [loading]="saving"
+      ></button>
+    </div>
+  </form>
+</censeo-async-loader>

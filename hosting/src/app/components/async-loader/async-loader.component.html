@@ -1,0 +1,7 @@
+<p-progressSpinner *ngIf="loading"></p-progressSpinner>
+
+<div *ngIf="error">{{ error }}</div>
+
+<ng-container *ngIf="!loading && !error">
+  <ng-content></ng-content>
+</ng-container>
