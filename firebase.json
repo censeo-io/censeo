@@ -1,7 +1,7 @@
 {
   "hosting": {
     "target": "censeo",
-    "public": "hosting/dist/censeo",
+    "public": "dist/censeo",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "headers": [
       {
