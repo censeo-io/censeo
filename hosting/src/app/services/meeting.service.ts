@@ -90,7 +90,7 @@ export class MeetingService {
       : of(toNewMeeting());
   }
 
-  async save(changedMeeting: any, meetingId: string | null) {
+  async save(changedMeeting: Meeting | NewMeeting, meetingId: string | null) {
     const isEditing = !!meetingId;
     const user = await firstValueFrom(this.authService.maybeUser$);
     if (!user) {

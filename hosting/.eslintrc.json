@@ -27,7 +27,7 @@
             "style": "kebab-case"
           }
         ],
-        "comma-dangle": ["always-multiline"]
+        "comma-dangle": ["error", "always-multiline"]
       }
     },
     {
