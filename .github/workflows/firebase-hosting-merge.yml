@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      # `nx test` and `nx build` are ran via Firebase, as a pre-deploy step
       - run: cd hosting && npm ci
+      - run: cd hosting && node_modules/.bin/nx build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: "${{ secrets.GITHUB_TOKEN }}"
