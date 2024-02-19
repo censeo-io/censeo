@@ -1,14 +1,12 @@
 // nx g s services/meetings
 import { Injectable } from '@angular/core';
 import {
+  Firestore,
   addDoc,
   collection,
   collectionData,
-  CollectionReference,
   deleteDoc,
   doc,
-  DocumentReference,
-  Firestore,
   getDoc,
   setDoc,
 } from '@angular/fire/firestore';
@@ -17,11 +15,11 @@ import { Router } from '@angular/router';
 import { format } from 'date-fns';
 import { MessageService } from 'primeng/api';
 import {
+  Observable,
   catchError,
   firstValueFrom,
   from,
   map,
-  Observable,
   of,
   withLatestFrom,
 } from 'rxjs';
@@ -136,19 +134,10 @@ export class MeetingService {
     }
   }
 
-  private backendSave(meeting: Meeting, id: string | null) {
-    return id
-      ? setDoc<Meeting>(
-          doc(this.firestore, 'meetings', id) as DocumentReference<Meeting>,
-          meeting,
-        )
-      : addDoc<Meeting>(
-          collection(
-            this.firestore,
-            'meetings',
-          ) as CollectionReference<Meeting>,
-          meeting,
-        );
+  private backendSave(meeting: Meeting, meetingId: string | null) {
+    return meetingId
+      ? setDoc(doc(this.firestore, 'meetings', meetingId), meeting)
+      : addDoc(collection(this.firestore, 'meetings'), meeting);
   }
 
   delete(id: MeetingId) {
