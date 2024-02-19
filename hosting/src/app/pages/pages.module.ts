@@ -1,5 +1,4 @@
 // nx g m pages -m app
-
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';

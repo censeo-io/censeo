@@ -1,5 +1,4 @@
 // nx g m app-routing -m app --flat
-
 import { NgModule } from '@angular/core';
 import { User as AngularFireUser } from '@angular/fire/auth';
 import { AuthGuard, AuthPipeGenerator } from '@angular/fire/auth-guard';

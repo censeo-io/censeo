@@ -1,5 +1,4 @@
 // nx g s services/meetings
-
 import { Injectable } from '@angular/core';
 import {
   addDoc,

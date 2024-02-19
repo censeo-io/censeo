@@ -1,5 +1,4 @@
 // nx g c -m pages pages/meetings
-
 import { Component } from '@angular/core';
 
 @Component({

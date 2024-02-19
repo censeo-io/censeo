@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { AsyncLoaderComponent } from './async-loader.component';
 
 describe('AsyncLoaderComponent', () => {
