@@ -1,23 +1,19 @@
 <h1>Meetings</h1>
 
-<censeo-async-loader
-  *ngIf="meetings$ | async as meetings"
-  [loading]="loading$ | async"
->
+<censeo-async-loader *ngIf="data$ | async as data" [loading]="loading$ | async">
   <div class="col-12 text-right pb-3">
     <button
       type="submit"
       class="p-button-sm"
       pButton
-      pRipple
       icon="pi pi-plus"
       label="Add Meeting"
-      (click)="addMeeting()"
+      (click)="manageMeeting()"
     ></button>
   </div>
 
   <p-table
-    [value]="meetings || []"
+    [value]="data.meetings || []"
     sortField="created"
     [sortOrder]="sortOrder"
     styleClass="p-datatable-sm p-datatable-striped"
@@ -27,45 +23,42 @@
         <th pSortableColumn="name">
           Name <p-sortIcon field="name"></p-sortIcon>
         </th>
+        <th class="text-center">Owners</th>
+        <th class="text-center">Voters</th>
         <th pSortableColumn="created">
           Created <p-sortIcon field="created"></p-sortIcon>
         </th>
-        <th class="text-center">Owners</th>
-        <th class="text-center">Voters</th>
-        <th class="text-center" style="width: 5rem">Delete</th>
+        <th class="text-center" style="width: 8rem">Manage</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-meeting>
       <tr>
-        <td>
-          <a [routerLink]="['manage', meeting.id]">{{ meeting.name }}</a>
+        <td>{{ meeting.name }}</td>
+        <td class="text-center">
+          {{ meeting.owners.length }}
+        </td>
+        <td class="text-center">
+          {{ meeting.voters?.length || 0 }}
         </td>
         <td>{{ getDateDisplay(meeting) }}</td>
         <td class="text-center">
-          <span
-            pTooltip="{{ meeting.owners.join('<br />') }}"
-            tooltipPosition="top"
-            [escape]="false"
-            >{{ meeting.owners.length }}</span
-          >
-        </td>
-        <td class="text-center">
-          <span
-            pTooltip="{{ meeting.voters?.join('<br />') }}"
-            tooltipPosition="top"
-            [escape]="false"
-            >{{ meeting.voters?.length || 0 }}</span
-          >
-        </td>
-        <td class="text-center">
           <button
             type="button"
-            class="p-button-rounded p-button-danger"
+            class="p-button-rounded p-button-danger mx-1"
             pButton
-            pRipple
-            icon="pi pi-times"
-            (click)="deleteMeeting(meeting)"
+            icon="pi pi-pencil"
+            (click)="manageMeeting(meeting, data.user)"
             [loading]="deletingMeetingId === meeting.id"
+            [disabled]="!canManage(meeting, data.user)"
+          ></button>
+          <button
+            type="button"
+            class="p-button-rounded p-button-danger mx-1"
+            pButton
+            icon="pi pi-trash"
+            (click)="deleteMeeting(meeting, data.user)"
+            [loading]="deletingMeetingId === meeting.id"
+            [disabled]="!canManage(meeting, data.user)"
           ></button>
         </td>
       </tr>

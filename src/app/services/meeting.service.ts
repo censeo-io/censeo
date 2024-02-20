@@ -33,6 +33,7 @@ import {
   toMeetingWithId,
   toNewMeeting,
 } from '../models/meeting.model';
+import { MaybeUser } from '../models/user.model';
 import { AuthService } from './auth.service';
 
 @Injectable({
@@ -144,6 +145,10 @@ export class MeetingService {
 
   delete(id: MeetingId) {
     return deleteDoc(doc(this.firestore, this.meetingsPath, id));
+  }
+
+  canManage(meeting: Meeting | MeetingWithId, user: MaybeUser): boolean {
+    return !!user && meeting.owners.includes(user.email);
   }
 
   getDateDisplay(meeting: Meeting) {
