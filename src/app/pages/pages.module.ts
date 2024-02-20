@@ -10,7 +10,6 @@ import { ChipsModule } from 'primeng/chips';
 import { InputTextModule } from 'primeng/inputtext';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
-import { TooltipModule } from 'primeng/tooltip';
 import { AsyncLoaderComponent } from '../components/async-loader/async-loader.component';
 import { HomeComponent } from './home/home.component';
 import { ListMeetingsComponent } from './meetings/list-meetings/list-meetings.component';
@@ -36,7 +35,6 @@ import { MeetingsComponent } from './meetings/meetings.component';
     InputTextModule,
     TableModule,
     ToastModule,
-    TooltipModule,
   ],
 })
 export class PagesModule {}

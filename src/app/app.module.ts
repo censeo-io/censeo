@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { MenubarModule } from 'primeng/menubar';
-import { StyleClassModule } from 'primeng/styleclass';
 import { TagModule } from 'primeng/tag';
 import { ToastModule } from 'primeng/toast';
 import { environment } from '../environments/environment';
@@ -22,7 +21,6 @@ import { PagesModule } from './pages/pages.module';
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     AppRoutingModule,
-    StyleClassModule, // TODO: Do I need this?
     MenubarModule,
     ConfirmDialogModule,
     TagModule,
