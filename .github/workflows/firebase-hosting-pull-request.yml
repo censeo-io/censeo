@@ -21,6 +21,7 @@ jobs:
       - run: node_modules/.bin/nx lint
       - run: node_modules/.bin/nx test
       - run: node_modules/.bin/nx build
+      - run: echo "pr${{ github.event.number }}-${{ github.head_ref }}"
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
